@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(p8105.datasets)
 library(ggridges)
+library(readxl)
 
 ## Set Global Options 
 knitr::opts_chunk$set(
@@ -37,5 +38,19 @@ scale_fill_discrete = scale_fill_viridis_d
 
 
 
+
+# Problem 1
+
+### Loading the p8105_mtp_data.xlsx data set and cleaning the data set 
+```{r}
+naturer_df <-
+  read_excel(
+    "./data/p8105_mtp_data.xlsx",
+    sheet = "this one",
+    skip = 8) %>%
+  janitor::clean_names()
+
+naturer_df
+```
 
 
