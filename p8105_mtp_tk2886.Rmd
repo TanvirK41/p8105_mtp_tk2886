@@ -47,10 +47,27 @@ naturer_df <-
   read_excel(
     "./data/p8105_mtp_data.xlsx",
     sheet = "this one",
-    skip = 8) %>%
+    range = "A9:I1230") %>%
   janitor::clean_names()
-
-naturer_df
 ```
 
+
+### replacing numerical codes with actual data information
+```{r}
+naturer_dfc <- 
+  naturer_df %>%
+  mutate(
+    sex = recode(sex, "0" = "Female", "1" = "Male"),
+    age_group = recode(age_group,
+                       "2" = "18-30", 
+                       "3" = "31-40", 
+                       "4" = "41-50",
+                       "5" = "51-60", 
+                       "6" = "60+",
+                       "7" = "60+", 
+                       "8" = "60+")
+    )
+
+naturer_dfc
+```
 
