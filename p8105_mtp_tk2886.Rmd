@@ -52,7 +52,7 @@ mtp_df <-
 
 
 
-### replacing numerical codes with actual data information
+### Replacing numerical codes with the real representation and converting data types to the correct data types and arranging the table by gender and age. 
 ```{r}
 eop_dfc <- 
   mtp_df %>%
@@ -89,23 +89,27 @@ eop_dfc <-
                           "5" = "50-60",
                           "6" = "60-70",
                           "7" = "70-80"),
-    sex = forcats::fct_relevel(sex, levels = c("Female",
-                                               "Male")), 
-    age_group = forcats::fct_relevel(age_group, levels = c("<18", 
+    sex = factor(sex, levels = c("Female",
+                                  "Male")), 
+    age_group = factor(age_group, levels = c("<18", 
                                              "18-30", 
                                              "31-40",
                                               "41-50", 
                                              "51-60",
                                               "60+")),
-    eop_size = forcats::fct_relevel(eop_size, levels = c(
+    eop_size = factor(eop_size, levels = c(
                       "0-5",
                       "5-10",
                       "10-15",
                       "15-20",
                       "20-25",
                       "25+")), 
-    age = as.integer(age)
-    ) %>%
+    eop_visibility_classification = factor(eop_visibility_classification, levels = c(
+      "eop size 0 mm",
+      "0 < eop size mm <= 5",
+      "eop size >= 5 mm")), 
+    age = as.integer(age),
+    eop_size_mm = as.double(eop_size_mm)) %>%
   rename(eop_group = eop_size,
          fhp_group = fhp_category) %>%
   arrange(sex, age)
@@ -115,7 +119,7 @@ eop_dfc
 ```
 
 ```{r}
-naturer_dfc %>% 
+eop_dfc %>% 
   group_by(sex, age_group) %>% 
   summarise(
     frequency = n()) %>% 
@@ -126,5 +130,8 @@ naturer_dfc %>%
 ```
 
 
+```{r}
+
+```
 
 
