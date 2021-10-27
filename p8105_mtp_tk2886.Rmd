@@ -52,14 +52,16 @@ naturer_df <-
 ```
 
 
+
+
 ### replacing numerical codes with actual data information
 ```{r}
 naturer_dfc <- 
   naturer_df %>%
   mutate(
     sex = recode(sex, "0" = "Female", "1" = "Male"),
-    age_group = recode(age_group,
-                       "1" = ">18",
+     age_group = recode(age_group,
+                       "1" = "> 18",
                        "2" = "18-30", 
                        "3" = "31-40", 
                        "4" = "41-50",
@@ -88,9 +90,26 @@ naturer_dfc <-
     eop_visibility_classification = recode(eop_visibility_classification,
                                            "0" = "eop size 0 mm",
                                            "1" = "0 < eop size mm <= 5",
-                                           "2" = "eop size >= 5 mm")
+                                           "2" = "eop size >= 5 mm"),
+    age_group = factor(age_group, levels = c("> 18", "18-30", "31-40",
+                                              "41-50", "51-60",
+                                              "60+"))
     )
 
-naturer_dfc
+naturer_dfc 
+
 ```
+
+```{r}
+naturer_dfc %>% 
+  group_by(sex, age_group) %>% 
+  summarise(
+    frequency = n()) %>% 
+  pivot_wider(
+    names_from = sex,
+    values_from = frequency) %>% 
+  knitr::kable(col.names = c('Age Group', 'Female', 'Male'))
+```
+
+
 
