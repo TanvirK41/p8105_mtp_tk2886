@@ -6,8 +6,6 @@ output: github_document
 ---
 
 
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -43,7 +41,7 @@ scale_fill_discrete = scale_fill_viridis_d
 
 ### Loading the p8105_mtp_data.xlsx data set and cleaning the data set 
 ```{r}
-naturer_df <-
+mtp_df <-
   read_excel(
     "./data/p8105_mtp_data.xlsx",
     sheet = "this one",
@@ -56,12 +54,12 @@ naturer_df <-
 
 ### replacing numerical codes with actual data information
 ```{r}
-naturer_dfc <- 
-  naturer_df %>%
+eop_dfc <- 
+  mtp_df %>%
   mutate(
-    sex = recode(sex, "0" = "Female", "1" = "Male"),
+     sex = recode(sex, "0" = "Female", "1" = "Male"),
      age_group = recode(age_group,
-                       "1" = "> 18",
+                       "1" = "<18",
                        "2" = "18-30", 
                        "3" = "31-40", 
                        "4" = "41-50",
@@ -75,9 +73,13 @@ naturer_dfc <-
                       "1" = "5-10",
                       "2" = "10-15",
                       "3" = "15-20",
-                      "4" = "20=25",
+                      "4" = "20-25",
                       "5" = "25+"
                       ),
+    eop_visibility_classification = recode(eop_visibility_classification,
+                      "0" = "eop size 0 mm",
+                      "1" = "0 < eop size mm <= 5",
+                      "2" = "eop size >= 5 mm"),
     fhp_category = recode(fhp_category,
                           "0" = "0-10",
                           "1" = "10-20",
@@ -87,16 +89,28 @@ naturer_dfc <-
                           "5" = "50-60",
                           "6" = "60-70",
                           "7" = "70-80"),
-    eop_visibility_classification = recode(eop_visibility_classification,
-                                           "0" = "eop size 0 mm",
-                                           "1" = "0 < eop size mm <= 5",
-                                           "2" = "eop size >= 5 mm"),
-    age_group = factor(age_group, levels = c("> 18", "18-30", "31-40",
-                                              "41-50", "51-60",
-                                              "60+"))
-    )
+    sex = forcats::fct_relevel(sex, levels = c("Female",
+                                               "Male")), 
+    age_group = forcats::fct_relevel(age_group, levels = c("<18", 
+                                             "18-30", 
+                                             "31-40",
+                                              "41-50", 
+                                             "51-60",
+                                              "60+")),
+    eop_size = forcats::fct_relevel(eop_size, levels = c(
+                      "0-5",
+                      "5-10",
+                      "10-15",
+                      "15-20",
+                      "20-25",
+                      "25+")), 
+    age = as.integer(age)
+    ) %>%
+  rename(eop_group = eop_size,
+         fhp_group = fhp_category) %>%
+  arrange(sex, age)
 
-naturer_dfc 
+eop_dfc
 
 ```
 
@@ -110,6 +124,7 @@ naturer_dfc %>%
     values_from = frequency) %>% 
   knitr::kable(col.names = c('Age Group', 'Female', 'Male'))
 ```
+
 
 
 
