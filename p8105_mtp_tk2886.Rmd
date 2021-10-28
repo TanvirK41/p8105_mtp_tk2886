@@ -224,7 +224,9 @@ eop_fhp_tbl <-
 
 After going through the data. There is a female participant who was classified as 17 years of age but the report abstracts states that the participants must be between the ages of 18-86. We do not know if the age was mistakenly entered. We many not assume if it the participant was truly 17 years of age and we may not put that participant in any of the other age group without first consulting with the researcher. Also there is a male participant who was classified as 45 years of age, however that participant was being grouped in the less than 18 years of age category. I did not include that participant because we do not know if 45 is really the participant's age or if it's different age without consulting with the researcher.
 
-### Plots for Categorical Variables
+
+
+
 
 ### Age vs Age Group Plot 
 ```{r}
@@ -242,6 +244,9 @@ agedb_plot <-
 
 agedb_plot
 ```
+
+
+
 
 ```{r}
 eop_classification <- 
