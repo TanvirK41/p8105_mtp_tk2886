@@ -180,6 +180,19 @@ After going through the data. There is a female participant who was classified a
 
 
 ```{r}
+agedb_plot <- 
+  eop_dfc %>%
+  ggplot(aes(x = age_group, y = age, color = sex)) + 
+    geom_point(alpha = 0.5) +
+  labs(
+    title = "Figure.1: Age vs Age Group Category",
+    x = "Age Group Category",
+    y = "Age")
 
+agedb_plot
 ```
+
+
+
+
 
