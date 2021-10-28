@@ -6,6 +6,7 @@ output: github_document
 ---
 
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -15,21 +16,17 @@ library(tidyverse)
 library(p8105.datasets)
 library(ggridges)
 library(readxl)
-
 ## Set Global Options 
 knitr::opts_chunk$set(
   fig.width = 6,
   fig.asp = .6, 
   out.width = "90%"
 )
-
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
-
 options(
   ggplot2.continuous.colour = "viridis",
   ggplot2.continuous.fill = "viridis"
 )
-
 scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 ```
@@ -57,7 +54,12 @@ mtp_df <-
 eop_dfc <- 
   mtp_df %>%
   mutate(
-     sex = recode(sex, "0" = "Female", "1" = "Male"),
+     sex = recode(sex, 
+                  "0" = "female", 
+                  "1" = "male"),
+     sex = factor(sex, levels = c(
+                    "female",
+                    "male")), 
      age_group = recode(age_group,
                        "2" = "18-30", 
                        "3" = "31-40", 
@@ -66,6 +68,12 @@ eop_dfc <-
                        "6" = "60+",
                        "7" = "60+", 
                        "8" = "60+"), 
+     age_group = factor(age_group, levels = c(
+                    "18-30", 
+                    "31-40",
+                    "41-50", 
+                    "51-60",
+                    "60+")),
     eop_size_mm = replace(eop_size_mm, is.na(eop_size_mm), "0"),
     eop_size = recode(eop_size,
                       "0" = "0-5",
@@ -75,10 +83,21 @@ eop_dfc <-
                       "4" = "20-25",
                       "5" = "25+"
                       ),
+    eop_size = factor(eop_size, levels = c(
+                      "0-5",
+                      "5-10",
+                      "10-15",
+                      "15-20",
+                      "20-25",
+                      "25+")), 
     eop_visibility_classification = recode(eop_visibility_classification,
                       "0" = "eop size 0 mm",
                       "1" = "0 < eop size mm <= 5",
                       "2" = "eop size >= 5 mm"),
+    eop_visibility_classification = factor(eop_visibility_classification, levels = c(
+                    "eop size 0 mm",
+                    "0 < eop size mm <= 5",
+                    "eop size >= 5 mm")),
     fhp_category = recode(fhp_category,
                           "0" = "0-10",
                           "1" = "10-20",
@@ -88,43 +107,58 @@ eop_dfc <-
                           "5" = "50-60",
                           "6" = "60-70",
                           "7" = "70-80"),
-    sex = factor(sex, levels = c("Female",
-                                  "Male")), 
-    age_group = factor(age_group, levels = c("18-30", 
-                                             "31-40",
-                                              "41-50", 
-                                             "51-60",
-                                              "60+")),
-    eop_size = factor(eop_size, levels = c(
-                      "0-5",
-                      "5-10",
-                      "10-15",
-                      "15-20",
-                      "20-25",
-                      "25+")), 
-    eop_visibility_classification = factor(eop_visibility_classification, levels = c(
-      "eop size 0 mm",
-      "0 < eop size mm <= 5",
-      "eop size >= 5 mm")),
     fhp_category = factor(fhp_category, levels = c(
-      "0-10",
-      "10-20",
-      "20-30",
-      "30-40",
-      "40-50",
-      "50-60",
-      "60-70",
-      "70-80"
+                           "0-10",
+                           "10-20",
+                           "20-30",
+                           "30-40",
+                           "40-50",
+                           "50-60",
+                           "60-70",
+                           "70-80"
     )), 
     age = as.integer(age),
     eop_size_mm = as.double(eop_size_mm)) %>%
-  rename(eop_group = eop_size,
-         fhp_group = fhp_category) %>%
-  drop_na(age_group) %>%
   arrange(sex, age)
-
-eop_dfc
 ```
+
+
+
+
+```{r analyzing the midterm project dataset (eop dataset)}
+eop_dim <- eop_dfc %>%
+  dim()
+
+eop_row <- eop_dfc %>%
+  nrow()
+
+eop_col <- eop_dfc %>%
+  ncol()
+
+eop_key_var <- eop_dfc %>%
+  names()
+```
+The research report describes the relationship between posture and “enlarged protuberances”, especially among younger subjects (however there are older aged participants) The research article is one of the article from 2018, Nature Scientific Reports. Originally, the dataset that was given and loaded had 1,221 participants. I have noticed in the abstract of the report, the researcher mentions that n = 1200, but there is 1,221 participants in our dataset. 
+
+After analyzing one of the 2018 Nature Scientific Report that describes the relationship between posture and “enlarged protuberances”, especially among younger subjects, there are key components that need to be identified. This data set has **`r eop_row`**. This data set has **`r eop_col`**. The number of observations in this research study that is between ages 18-86 is **`r eop_row`**. The key variables in the dataset are **`r eop_key_var`**. 
+
+
+
+```{r creating table to showcase the distribution of age groups amongst the gender}
+age_tbl <-
+  eop_dfc %>% 
+  group_by(sex, age_group) %>% 
+  summarise(
+    frequency = n()) %>% 
+  drop_na() %>%
+  pivot_wider(
+    names_from = sex,
+    values_from = frequency) %>% 
+  knitr::kable(col.names = c('Age Group', 'Female', 'Male'),
+               caption = "**Table1:** Age and Gender Distribution.**")
+```
+**Table1** showcases the age group and gender distribution. The age group of 18 to 30 has the most male and female participants. 
+
 
 
 
@@ -132,16 +166,20 @@ eop_dfc
 eop_dfc %>% 
   group_by(sex, age_group) %>% 
   summarise(
-    frequency = n()) %>% 
+    frequency = n()) %>%
   pivot_wider(
     names_from = sex,
     values_from = frequency) %>% 
-  knitr::kable(col.names = c('Age Group', 'Female', 'Male'))
+  knitr::kable(col.names = c('Age Group', 'Female', 'Male'),
+               caption = "**Table2:** Age and Gender Distribution.**")
 ```
+**Table2:** Table 2 indicates that there is a miss-classified data in both Female and Male. The reason why the NA values were
+
+After going through the data. There is a female participant who was classified as 17 years of age but the report abstracts states that the participants must be between the ages of 18-86. We do not know if the age was mistakenly entered. We many not assume if it the participant was truly 17 years of age and we may not put that participant in any of the other age group without first consulting with the researcher. Also there is a male participant who was classified as 45 years of age, however that participant was being grouped in the less than 18 years of age category. I did not include that participant because we do not know if 45 is really the participant's age or if it's different age without consulting with the researcher.
+
 
 
 ```{r}
 
 ```
-
 
