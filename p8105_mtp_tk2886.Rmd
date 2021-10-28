@@ -193,7 +193,6 @@ age_tbl2 <-
                caption = "**Table2:** Age and Gender Distribution.**")
 
 
-
 eop_classification_tbl <- 
   eop_dfc %>% 
   group_by(eop_visibility_classification) %>% 
@@ -203,8 +202,6 @@ eop_classification_tbl <-
   knitr::kable()
 
 
-
-
 eop_size_tbl <- 
   eop_dfc %>% 
   group_by(eop_size) %>% 
@@ -212,9 +209,55 @@ eop_size_tbl <-
     frequency = n()) %>%
     mutate(percentage = prop.table(frequency)*100) %>%
   knitr::kable()
+
+
+eop_fhp_tbl <- 
+  eop_dfc %>% 
+  group_by(fhp_category) %>% 
+  summarise(
+    frequency = n()) %>%
+    mutate(percentage = prop.table(frequency)*100) %>%
+  knitr::kable()
+
 ```
 **Table2:** Table 2 indicates that there is a miss-classified data in both Female and Male. The reason why the NA values were
 
 After going through the data. There is a female participant who was classified as 17 years of age but the report abstracts states that the participants must be between the ages of 18-86. We do not know if the age was mistakenly entered. We many not assume if it the participant was truly 17 years of age and we may not put that participant in any of the other age group without first consulting with the researcher. Also there is a male participant who was classified as 45 years of age, however that participant was being grouped in the less than 18 years of age category. I did not include that participant because we do not know if 45 is really the participant's age or if it's different age without consulting with the researcher.
+
+### Plots for Categorical Variables
+
+### Age vs Age Group Plot 
+```{r}
+agedb_plot <- 
+  eop_dfc %>%
+  ggplot(aes(x = age_group, y = age, color = sex)) + 
+  geom_point(alpha = 0.5) +
+  labs(
+    title = "Figure.1: Age vs Age Group Category",
+    x = "Age Group Category",
+    y = "Age") +
+  theme(legend.position = "right",
+        legend.title = element_text(size = 9, face = "bold"),
+        legend.key.size = unit(0.3, 'cm')) 
+
+agedb_plot
+```
+
+```{r}
+eop_classification <- 
+  eop_dfc %>% 
+  ggplot(aes(x = eop_visibility_classification, y = eop_size_mm, color = eop_visibility_classification)) +
+  geom_point() +
+  geom_hline(yintercept = c(0, 5), color = 'blue') + 
+  labs(
+    x = "EOP Visibility Classification", 
+    y = "EOP Size (mm)") +
+  theme(legend.position = "right",
+        legend.title = element_text(size = 9, face = "bold"),
+        legend.key.size = unit(0.3, 'cm')) +
+  scale_x_discrete(name = "EOP Visibility Classification", 
+                    labels = c("0mm","0 < x <= 5",">=5mm"))
+eop_classification
+```
 
 
