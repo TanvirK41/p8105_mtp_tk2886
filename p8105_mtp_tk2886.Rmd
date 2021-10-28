@@ -59,7 +59,6 @@ eop_dfc <-
   mutate(
      sex = recode(sex, "0" = "Female", "1" = "Male"),
      age_group = recode(age_group,
-                       "1" = "<18",
                        "2" = "18-30", 
                        "3" = "31-40", 
                        "4" = "41-50",
@@ -91,8 +90,7 @@ eop_dfc <-
                           "7" = "70-80"),
     sex = factor(sex, levels = c("Female",
                                   "Male")), 
-    age_group = factor(age_group, levels = c("<18", 
-                                             "18-30", 
+    age_group = factor(age_group, levels = c("18-30", 
                                              "31-40",
                                               "41-50", 
                                              "51-60",
@@ -112,11 +110,13 @@ eop_dfc <-
     eop_size_mm = as.double(eop_size_mm)) %>%
   rename(eop_group = eop_size,
          fhp_group = fhp_category) %>%
+  drop_na(age_group) %>%
   arrange(sex, age)
 
 eop_dfc
-
 ```
+
+
 
 ```{r}
 eop_dfc %>% 
