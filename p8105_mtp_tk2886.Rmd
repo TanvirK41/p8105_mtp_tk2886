@@ -11,6 +11,9 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
+
 ```{r echo = FALSE, message = FALSE}
 library(tidyverse)
 library(p8105.datasets)
@@ -37,9 +40,9 @@ scale_fill_discrete = scale_fill_viridis_d
 
 
 # Problem 1
-
 ### Loading the p8105_mtp_data.xlsx data set and cleaning the data set 
 ```{r}
+#Loading the Data and extracting a specific data
 mtp_df <-
   read_excel(
     "./data/p8105_mtp_data.xlsx",
@@ -56,66 +59,60 @@ mtp_df <-
 eop_dfc <- 
   mtp_df %>%
   mutate(
-     sex = case_when(
-       sex == "0" ~ "female", 
-       sex == "1" ~ "male"),
-     sex = forcats::fct_relevel(
-       sex, c(
-       "female",
-       "male")),
-     age_group = case_when(
-       age_group == "2" ~ "18-30", 
-       age_group == "3" ~ "31-40", 
-       age_group == "4" ~ "41-50",
-       age_group == "5" ~ "51-60", 
-       age_group == "6" ~ "60+",
-       age_group == "7" ~ "60+", 
-       age_group == "8" ~ "60+"), 
-     age_group = forcats::fct_relevel(
-       age_group, c(
+     sex = recode(sex, 
+                  "0" = "female", 
+                  "1" = "male"),
+     sex = factor(sex, levels = c(
+                    "female",
+                    "male")), 
+     age_group = recode(age_group,
+                       "2" = "18-30", 
+                       "3" = "31-40", 
+                       "4" = "41-50",
+                       "5" = "51-60", 
+                       "6" = "60+",
+                       "7" = "60+", 
+                       "8" = "60+"), 
+     age_group = factor(age_group, levels = c(
                     "18-30", 
                     "31-40",
                     "41-50", 
                     "51-60",
                     "60+")),
     eop_size_mm = replace(eop_size_mm, is.na(eop_size_mm), "0"),
-    eop_size = case_when(
-      eop_size == "0" ~ "0-5",
-      eop_size == "1" ~ "5-10",
-      eop_size == "2" ~ "10-15",
-      eop_size == "3" ~ "15-20",
-      eop_size == "4" ~ "20-25",
-      eop_size == "5" ~ "25+"
+    eop_size = recode(eop_size,
+                      "0" = "0-5",
+                      "1" = "5-10",
+                      "2" = "10-15",
+                      "3" = "15-20",
+                      "4" = "20-25",
+                      "5" = "25+"
                       ),
-    eop_size = forcats::fct_relevel(
-      eop_size, c(
+    eop_size = factor(eop_size, levels = c(
                       "0-5",
                       "5-10",
                       "10-15",
                       "15-20",
                       "20-25",
                       "25+")), 
-    eop_visibility_classification = case_when(
-      eop_visibility_classification == "0" ~ "eop size 0 mm",
-      eop_visibility_classification == "1" ~ "0 < eop size mm <= 5",
-      eop_visibility_classification == "2" ~ "eop size >= 5 mm"),
-    eop_visibility_classification = forcats::fct_relevel(
-      eop_visibility_classification,
-                  c(
+    eop_visibility_classification = recode(eop_visibility_classification,
+                      "0" = "eop size 0 mm",
+                      "1" = "0 < eop size mm <= 5",
+                      "2" = "eop size >= 5 mm"),
+    eop_visibility_classification = factor(eop_visibility_classification, levels = c(
                     "eop size 0 mm",
                     "0 < eop size mm <= 5",
                     "eop size >= 5 mm")),
-    fhp_category = case_when(
-      fhp_category == "0" ~ "0-10",
-      fhp_category == "1" ~ "10-20",
-      fhp_category == "2" ~ "20-30",
-      fhp_category == "3" ~ "30-40",
-      fhp_category == "4" ~ "40-50",
-      fhp_category == "5" ~ "50-60",
-      fhp_category == "6" ~ "60-70",
-      fhp_category == "7" ~ "70-80"),
-    fhp_category = forcats::fct_relevel(fhp_category, 
-                          c(
+    fhp_category = recode(fhp_category,
+                          "0" = "0-10",
+                          "1" = "10-20",
+                          "2" = "20-30",
+                          "3" = "30-40",
+                          "4" = "40-50",
+                          "5" = "50-60",
+                          "6" = "60-70",
+                          "7" = "70-80"),
+    fhp_category = factor(fhp_category, levels = c(
                            "0-10",
                            "10-20",
                            "20-30",
@@ -123,12 +120,11 @@ eop_dfc <-
                            "40-50",
                            "50-60",
                            "60-70",
-                           "70-80")), 
+                           "70-80"
+    )), 
     age = as.integer(age),
     eop_size_mm = as.double(eop_size_mm)) %>%
   arrange(sex, age)
-
-eop_dfc
 ```
 
 
@@ -147,9 +143,7 @@ eop_col <- eop_dfc %>%
 eop_key_var <- eop_dfc %>%
   names()
 ```
-The research report describes the relationship between posture and “enlarged protuberances”, especially among younger subjects (however there are older aged participants) The research article is one of the article from 2018, Nature Scientific Reports. Originally, the dataset that was given and loaded had 1,221 participants. I have noticed in the abstract of the report, the researcher mentions that n = 1200, but there is 1,221 participants in our dataset. 
 
-After analyzing one of the 2018 Nature Scientific Report that describes the relationship between posture and “enlarged protuberances”, especially among younger subjects, there are key components that need to be identified. This data set has **`r eop_row`**. This data set has **`r eop_col`**. The number of observations in this research study that is between ages 18-86 is **`r eop_row`**. The key variables in the dataset are **`r eop_key_var`**. 
 
 
 
@@ -180,13 +174,12 @@ eop_dfc %>%
     mutate(percentage = prop.table(frequency)*100) %>%
   knitr::kable()
 ```
-**Table1** showcases the age group and gender distribution. The age group of 18 to 30 has the most male and female participants. 
 
 
 
 
 
-```{r}
+```{r message = FALSE}
 eop_dfc %>% 
   group_by(sex, age_group) %>% 
   summarise(
@@ -195,7 +188,7 @@ eop_dfc %>%
     names_from = sex,
     values_from = frequency) %>% 
   knitr::kable(col.names = c('Age Group', 'Female', 'Male'),
-               caption = "**Table2:** Age and Gender Distribution.**")
+               caption = "Age and Gender Distribution")
 
 
 eop_dfc %>% 
@@ -222,35 +215,60 @@ eop_dfc %>%
   knitr::kable()
 
 ```
-**Table2:** Table 2 indicates that there is a miss-classified data in both Female and Male. The reason why the NA values were
-
-After going through the data. There is a female participant who was classified as 17 years of age but the report abstracts states that the participants must be between the ages of 18-86. We do not know if the age was mistakenly entered. We many not assume if it the participant was truly 17 years of age and we may not put that participant in any of the other age group without first consulting with the researcher. Also there is a male participant who was classified as 45 years of age, however that participant was being grouped in the less than 18 years of age category. I did not include that participant because we do not know if 45 is really the participant's age or if it's different age without consulting with the researcher.
 
 
 
 
 
-### Age vs Age Group Plot 
+# Creating Plots to verify if the categorical variables follow the rules for their associated data 
+### Age/Age Group Verification Plot 
 ```{r}
 eop_dfc %>%
   ggplot(aes(x = age_group, y = age, color = sex)) + 
-  geom_point(alpha = 0.3) +
+  geom_point(alpha = 0.5) +
   labs(
-    title = "Figure.1: Age vs Age Group Category",
+    title = "Age vs Age Group Category Verfication",
     x = "Age Group Category",
-    y = "Age") +
+    y = "Age", 
+    caption = "https://doi.org/10.1038/s41598-018-21625-1") +
   theme(legend.position = "right",
         legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.3, 'cm')) +
   facet_grid(~sex)
 ```
 
+
+
+
+### FHP Size/FHP Category Verification Plot
 ```{r}
 eop_dfc %>%
   drop_na() %>% 
   ggplot(aes(x = fhp_category, y = fhp_size_mm, color = fhp_size_mm)) +
-  geom_point()
+  geom_point(alpha = 0.5) + 
+  labs(
+    title = "FHP Analysis Verification",
+    subtitle = "Grouped by FHP Category", 
+    x = "FHP Category",
+    y = "FHP Size (mm)",
+    caption = "https://doi.org/10.1038/s41598-018-21625-1")
 ```
+
+### EOP Size Verification
+```{r}
+eop_dfc %>%
+  drop_na() %>% 
+  ggplot(aes(x = eop_size, y = eop_size_mm, color = eop_size_mm)) +
+  geom_point(alpha = 0.5) + 
+  labs(
+    title = "EOP Size Verification",
+    subtitle = "Grouped by EOP Category", 
+    x = "EOP Category",
+    y = "EOP Size (mm)",
+    caption = "https://doi.org/10.1038/s41598-018-21625-1")
+```
+
+
 
 
 
@@ -266,11 +284,14 @@ eopdf_boxplot <-
     subtitle = "Grouped by Age group",
     x = "Age Group (years)", 
     y = "Forward Head Protraction Size (mm)",
-    caption = "Figure 1") + 
+    caption = "https://doi.org/10.1038/s41598-018-21625-1") + 
   scale_x_discrete(
     labels = c("18-30 years","30's", "40's", "50's", ">60"))
 eopdf_boxplot
 ```
+
+
+
 
 
 ```{r}
@@ -280,8 +301,8 @@ rate_plot_df <-
   drop_na(age_group) %>% 
   mutate(
     enlarged_filter = case_when(
-      eop_size_mm > 10 ~ 'Enlarged',
-      eop_size_mm <= 10 ~ 'Not Enlarged')) %>%
+      eop_size_mm > 10 ~ 'Enlarged'
+     )) %>%
   count(enlarged_filter) %>%
   mutate(rate = prop.table(n)) %>%
   filter(enlarged_filter == "Enlarged") %>%
@@ -293,7 +314,7 @@ rate_plot_df <-
     subtitle = "Grouped by Gender",
     x = "Age Group", 
     y = "Rate", 
-    caption = "Figure 2") + 
+    caption = "https://doi.org/10.1038/s41598-018-21625-1") + 
   theme(legend.position = "bottom",
         legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.3, 'cm'))  
@@ -312,11 +333,8 @@ grid.arrange(eopdf_boxplot, rate_plot_df, ncol = 2)
 
 ```{r}
 eop_dfc %>% 
-  #drop NA values for fhp size and age group since this is not a factor type.  
   drop_na(fhp_size_mm, age_group) %>% 
-  #filter out data that has only eop size data instead of also getting data with 0's. 
   #filter(eop_size_mm != "0") %>% 
-  #without color = sex, it will be harder to distinguish between gender 
   ggplot(aes(x = fhp_size_mm, y = eop_size_mm, color = sex)) +
   geom_point() +
   geom_smooth(
@@ -326,11 +344,10 @@ eop_dfc %>%
   labs(
     x = "FHP Size (mm)", 
     y = "EOP Size (mm)",
-    caption = "Data from mtp_df") +
+    caption = "https://doi.org/10.1038/s41598-018-21625-1") +
   facet_grid(
     sex ~ age_group)
 ```
-
 
 
 
@@ -341,8 +358,25 @@ eop_dfc %>%
   filter(age_group != "NA") %>%
   group_by(age_group) %>%
   summarise(Participant_Count = n()) %>%
-  knitr::kable()
+  knitr::kable(col.names = 
+                 c("Age Group",
+                   "Participant Count"))
 ```
 
+
+
+
+```{r}
+#Getting mean and standard deviation 
+eop_dfc %>%
+  filter(age_group != "NA") %>%
+  group_by(sex) %>% 
+  summarise(Mean = round(mean(fhp_size_mm, na.rm = TRUE)), 
+            Standard_Deviation = sd(fhp_size_mm, na.rm = TRUE)) %>% 
+  knitr::kable(
+    col.names = c("Sex",
+                  "Mean",
+                  "Standard Deviation"))
+```
 
 
