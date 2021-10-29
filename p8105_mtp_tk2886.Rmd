@@ -288,6 +288,31 @@ eopdf_boxplot <-
 
 
 ```{r}
+rate_plot_df <- 
+  eop_dfc %>%
+  group_by(age_group, sex) %>%
+  filter(age_group != 'NA') %>% 
+  mutate(
+    enlarged_filter = case_when(
+      eop_size_mm > 10 ~ 'Enlarged',
+      eop_size_mm <= 10 ~ 'Not Enlarged')) %>%
+  count(enlarged_filter) %>%
+  mutate(rate = prop.table(n)) %>%
+  filter(enlarged_filter == "Enlarged") %>%
+  ggplot(aes(y = rate, x = age_group, color = sex)) +
+  geom_line(aes(group = sex)) +
+  geom_point() +
+  labs(
+    title = "Enlarged EOP (EEOP) Rate for each Age Group", 
+    x = "Age Group", 
+    y = "Rate", 
+    caption = "Figure 2")
+```
+
+
+
+
+```{r}
 eop_dfc %>% 
   #filter out only the factor levels associated with age groups assigned. Does not include NAs. 
   filter(age_group != 'NA',
@@ -309,5 +334,6 @@ eop_dfc %>%
   facet_grid(
     sex ~ age_group)
 ```
+
 
 
