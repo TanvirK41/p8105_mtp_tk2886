@@ -266,3 +266,19 @@ eop_classification
 ```
 
 
+
+
+# Visualization
+```{r}
+eop_dfc %>% 
+  #filter out only the factor levels associated with age groups assigned. Does not include NAs. 
+  filter(age_group != 'NA',
+  #filter out data that has only eop size data instead of also getting data with 0's. 
+         eop_size_mm != "0") %>% 
+  #drop NA values for fhp size since this is not a factor type, I may not use the same filter method. 
+  drop_na(fhp_size_mm) %>% 
+  #without color = sex, it will be harder to distinguish between gender 
+  ggplot(aes(x = fhp_size_mm, y = eop_size_mm, color = sex)) +
+  geom_point() +
+  geom_smooth()
+```
