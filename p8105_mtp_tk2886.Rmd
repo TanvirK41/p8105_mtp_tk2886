@@ -273,7 +273,7 @@ eop_dfc %>%
   facet_grid(~sex)
 ```
 
-*Both male and female each have a single participant incorrectly defined.*
+*Both male and female each have a single participants' data incorrectly defined.*
 
 
 
@@ -475,7 +475,7 @@ eop_dfc %>%
                   "Mean",
                   "Standard Deviation"),
     caption = 
-      "The **reported mean of FHP in male is 28** and **for female is 24**. This is consistent with the mean that is calculated which also indicates that **28** is the mean for men and **24** is the mean for female.")
+      "The **reported mean of FHP in male is 28** and **for female is 24**. This is consistent with the mean that is calculated which also indicates that **28** is the mean for male and **24** is the mean for female.")
 ```
 
 
@@ -542,7 +542,7 @@ custom_data = (total_pop / age_sixty) * 100
 custom_data %>%
   knitr::kable(
     col.names = c("FHP Rate"),
-    caption = "Table shows the FHP Rate among individuals over 60 and focusing on FHP size of 40mm. The **reported rate for FHP size over 40mm and among age group of 60+** is  **34.5%**. This is slightly different from the **R** code calculation: **32.46%**.")
+    caption = "Table shows the FHP Rate among individuals over 60 and focusing on FHP size over 40mm. The **reported rate for FHP size over 40mm and among age group of 60+** is  **34.5%**. This is slightly different from the **R** code calculation: **32.46%**.")
 ```
 
 
@@ -569,7 +569,7 @@ broad_trends <-
 
 broad_trends %>%
   mutate(Rate = FHPsize_Over40/AgeGroup_Frequency) %>%
-  knitr::kable(caption = "When looking at the broad trends, the data validates the authors statement that FHP is more common in older subjects with FHP size over 40mm and among age group of 60+ because in the *Table FH40*, it is indicated is it more common in the age population of 60+.")
+  knitr::kable(caption = "When looking at the broad trends, the data validates the authors statement that FHP size over 40mm is more common in older subjects (among age group of 60+). In the above, it is indicated is it more common in the age population of 60+")
 ```
 
 
@@ -578,4 +578,4 @@ broad_trends %>%
 
 # **Part 4: Conclusion** 
 
-My data analysis findings indicated that there are various inconsistencies and misclassification with the data that was provided. For example, individuals were grouped incorrectly, specific data values in the dataset were not correctly labeled which led to incorrect grouping, and the calculated statistical value did not align with the reported values. The figures and conclusion the author provided may be invalid because of the data misclassification. While my graph show that younger adults (18-30 years of age) have higher rate of EEOP than other age group and my statistical calculation shows that older age (60+) population have higher prevalence of forward head protraction (40mm size obversevred the most), we may not state that there is causal relationship between the usage of cell phone and horn growth because of the the numerous inconsistencies with the data. I would like researchers to first gather data on how many hours young adults uses their cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP.
+My data analysis findings indicated that there are various inconsistencies and misclassification with the data that was provided. For example, individuals were grouped incorrectly, specific data values in the dataset were not correctly labeled which led to incorrect grouping, and the calculated statistical value did not align with the reported values. The figures and conclusion the author provided may be invalid because of the data misclassification. While my graph show that younger adults (18-30 years of age) have higher rate of EEOP than other age group and my statistical calculation shows that older age (60+) population have higher prevalence of forward head protraction (40mm size obversevred the most in 60+), *we may not state that there is causal relationship* between the usage of cell phone and horn growth because of the the numerous inconsistencies with the data. I would like researchers to first gather data on how many hours young adults uses their cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP.
