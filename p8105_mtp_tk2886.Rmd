@@ -433,6 +433,7 @@ Prevalence %>%
 
 
 ```{r}
+#Calculating the data of FHP among individuals with age over 60 and focusing on only FHP size of over 40mm. 
 total_pop <- 
   eop_dfc %>%
   filter(age > 60 & fhp_size_mm > 40) %>% 
@@ -443,7 +444,12 @@ age_sixty =
   filter(age > 60) %>% 
   nrow()
 
-Prevalence_sixty = (total_pop / age_sixty) * 100
-Prevalence_sixty
+custom_data = (total_pop / age_sixty) * 100
+custom_data
+
+custom_data %>%
+  knitr::kable(
+    col.names = c("FHP Rate"),
+    caption = "Table shows the FHP Rate among individuals over 60 and focusing on FHP size of 40mm")
 ```
 
