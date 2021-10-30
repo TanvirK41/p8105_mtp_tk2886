@@ -39,8 +39,8 @@ scale_fill_discrete = scale_fill_viridis_d
 
 
 
-
-# Problem 1
+# **Part 1: Introduction** 
+### *Research Question*: Does Phone Usage lead to "horns" growing in the back of millenials' heads?
 ```{r}
 #Loading the p8105_mtp_data.xlsx data set, extracting specific part, cleaning the data set
 mtp_df <-
@@ -54,7 +54,7 @@ mtp_df <-
 
 
 
-
+#### **Data**
 ```{r}
 #Replacing numerical codes with the real representation and converting data types to the correct data types and arranging the table by gender and age (youung to old). 
 eop_dfc <- 
@@ -294,7 +294,7 @@ eop_dfc %>%
 
 
 
-# Problem 2 - Visualization
+# **Part 2: Visualization** 
 ```{r}
 #Improving Figure 3 - Showing the distribution using the boxplot 
 eopdf_boxplot <-
@@ -312,8 +312,6 @@ eopdf_boxplot <-
     labels = c("18-30 years","30's", "40's", "50's", "> 60")) +
   theme(
         text = element_text(size = 10))
-
-eopdf_boxplot
 ```
 
 
@@ -345,8 +343,6 @@ rate_plot_df <-
   theme(legend.position = "bottom",
         legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.3, 'cm')) 
-
-rate_plot_df
 ```
 
 
@@ -358,6 +354,7 @@ rate_plot_df
 # Created a 2 panel-figure of improved figure 3 and figure 4 
 grid.arrange(eopdf_boxplot, rate_plot_df, ncol = 2)
 ```
+
 **FHP DISTRIBUTION PLOT:** The average FHP size of male is always larger than female. One interesting trend is that as we analyze older people, the FHP size increases. 
 
 
@@ -366,7 +363,7 @@ grid.arrange(eopdf_boxplot, rate_plot_df, ncol = 2)
 
 
 
-```{r}
+```{r message = FALSE}
 #2x5 collection of panels that compares FHP Size versus EOP Size 
 eop_dfc %>% 
   drop_na(fhp_size_mm, 
@@ -384,13 +381,12 @@ eop_dfc %>%
     caption = "https://doi.org/10.1038/s41598-018-21625-1") +
   facet_grid(sex ~ age_group)
 ```
+
 In each age group for sex there is **slight positive correlation** between FHP size and EOP size. 
 
 
 
-# Problem 3 - Comparing Data 
-
-### Verifying the mean witht the reported mean 
+# **Part 3: Visualization** 
 ```{r}
 #Obtaining the sample sizes of each age group 
 eop_dfc %>% 
