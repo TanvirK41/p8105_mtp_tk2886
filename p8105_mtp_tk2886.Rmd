@@ -7,6 +7,7 @@ output: github_document
 
 
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -40,8 +41,8 @@ scale_fill_discrete = scale_fill_viridis_d
 
 
 # Problem 1
-### Loading the p8105_mtp_data.xlsx data set, extracting specific part, cleaning the data set
 ```{r}
+#Loading the p8105_mtp_data.xlsx data set, extracting specific part, cleaning the data set
 mtp_df <-
   read_excel(
     "./data/p8105_mtp_data.xlsx",
@@ -53,9 +54,9 @@ mtp_df <-
 
 
 
-### Replacing numerical codes with the real representation and converting data types to the correct data types and arranging the table by gender and age (youung to old). 
+
 ```{r}
-#Two important things happening: Re-coding and Changing the data type
+#Replacing numerical codes with the real representation and converting data types to the correct data types and arranging the table by gender and age (youung to old). 
 eop_dfc <- 
   mtp_df %>%
   mutate(
@@ -224,8 +225,8 @@ eop_dfc %>%
 
 
 # Creating Plots to verify if the categorical variables follow the rules for their associated data 
-### Age/Age Group Verification Plot 
 ```{r}
+#Age/Age Group Verification Plot 
 eop_dfc %>%
   ggplot(aes(x = age_group, y = age, color = sex)) + 
   geom_point(alpha = 0.5) +
@@ -243,8 +244,9 @@ eop_dfc %>%
 
 
 
-### FHP Size/FHP Category Verification Plot
+
 ```{r}
+#FHP Size/FHP Category Verification Plot
 eop_dfc %>%
   drop_na() %>% 
   ggplot(aes(x = fhp_category, y = fhp_size_mm, color = fhp_size_mm)) +
@@ -265,8 +267,9 @@ eop_dfc %>%
 
 
 
-### EOP Size Verification
+
 ```{r}
+#EOP Size Verification
 eop_dfc %>%
   drop_na() %>% 
   ggplot(aes(x = eop_size, y = eop_size_mm, color = eop_size_mm)) +
@@ -286,7 +289,7 @@ eop_dfc %>%
 
 # Problem 2 - Visualization
 ```{r}
-#Showing the distribution in the boxplot 
+#Improving Figure 3 - Showing the distribution in the boxplot 
 eopdf_boxplot <-
   eop_dfc %>%
   drop_na(age_group, fhp_size_mm) %>%
@@ -307,6 +310,7 @@ eopdf_boxplot
 
 
 ```{r}
+#Improving Figure 4 - showcasing the rate of EEOP of each of the age group 
 rate_plot_df <-
   eop_dfc %>%
   drop_na(age_group) %>%
@@ -341,6 +345,7 @@ rate_plot_df
 
 
 ```{r}
+#
 grid.arrange(eopdf_boxplot, rate_plot_df, ncol = 2)
 ```
 
