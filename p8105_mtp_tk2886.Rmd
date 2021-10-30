@@ -152,13 +152,12 @@ eop_key_var <- eop_dfc %>%
 ```{r message = FALSE}
 #Code for showing the count of Female and Male in each Age Group 
 eop_dfc %>% 
-  group_by(sex, age_group) %>% 
+  group_by(age_group, sex) %>% 
   summarise(
-    frequency = n()) %>% 
-  drop_na() %>%
+    Count = n()) %>% 
   pivot_wider(
     names_from = sex,
-    values_from = frequency) %>% 
+    values_from = Count) %>% 
   knitr::kable(col.names = c("Age Group", "Female", "Male"))
 
 #Code for showing the total female and male and the percentage of female and male
