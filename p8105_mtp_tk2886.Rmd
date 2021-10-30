@@ -149,7 +149,7 @@ eop_key_var <- eop_dfc %>%
 
 
 
-```{r creating table to showcase the distribution of age groups, gender}
+```{r message = FALSE}
 #Code for showing the count of Female and Male in each Age Group 
 eop_dfc %>% 
   group_by(sex, age_group) %>% 
@@ -159,7 +159,7 @@ eop_dfc %>%
   pivot_wider(
     names_from = sex,
     values_from = frequency) %>% 
-  knitr::kable(col.names = c("Age Group", "Female'", "Male"))
+  knitr::kable(col.names = c("Age Group", "Female", "Male"))
 
 #Code for showing the total female and male and the percentage of female and male
 eop_dfc %>% 
@@ -444,7 +444,6 @@ age_sixty =
   nrow()
 
 custom_data = (total_pop / age_sixty) * 100
-custom_data
 
 custom_data %>%
   knitr::kable(
@@ -468,6 +467,7 @@ broad_trends <-
   left_join(count_agegrp, over40mm_count, by = c("age_group" = "age_group"))
 
 broad_trends %>%
-  mutate(rate = over40/agegrp)
+  mutate(rate = over40/agegrp) %>%
+  knitr::kable()
 ```
 
