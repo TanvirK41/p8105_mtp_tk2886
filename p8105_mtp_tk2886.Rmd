@@ -134,7 +134,7 @@ eop_dfc <-
   arrange(sex, age)
 ```
 
-
+**Data Cleaning Process:** In order to having meaningful result, I made sure to first organize the data by re-coding the numerical values into meaningful information that is easier to understand. I converted specific values to numeric data type so that the numerical data values are not character data type. I converted the data groups to factor data type since each group has a fixed number of possible value and anything else will result in NA. Lastly, I organized my data by sex and age, the table shows all the female participants first and then male participants and by age starting from the lowest age going to highest age for each gender group. 
 
 
 ```{r analyzing the midterm project dataset (eop_dfc)}
@@ -514,9 +514,9 @@ custom_data = (total_pop / age_sixty) * 100
 custom_data %>%
   knitr::kable(
     col.names = c("FHP Rate"),
-    caption = "Table shows the FHP Rate among individuals over 60 and focusing on FHP size of 40mm")
+    caption = "Table shows the FHP Rate among individuals over 60 and focusing on FHP size of 40mm. The **reported rate for FHP size over 40mm and among age group of 60+** is  **34.5%**. This is slightly different from the **R** code calculation: **32.46%**.")
 ```
-The **reported rate for FHP size over 40mm and among age group of 60+** is  **34.5%**. This is slightly different from the **R** code calculation: **32.46%**. 
+
 
 
 
@@ -541,9 +541,8 @@ broad_trends <-
 
 broad_trends %>%
   mutate(Rate = FHPsize_Over40/AgeGroup_Frequency) %>%
-  knitr::kable(caption = "Table FHP40: Rate of FHP Size over 40 of the age groups ")
+  knitr::kable(caption = "When looking at the broad trends, the data validates the authors statement that FHP is more common in older subjects with FHP size over 40mm and among age group of 60+ because in the *Table FH40*, it is indicated is it more common in the age population of 60+.")
 ```
-When looking at the broad trends, the data validates the authors statement that FHP is more common in older subjects with FHP size over 40mm and among age group of 60+ because in the *Table FH40*, it is indicated is it more common in the age population of 60+.
 
 
 
