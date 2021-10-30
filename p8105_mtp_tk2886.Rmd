@@ -127,8 +127,6 @@ eop_dfc <-
     eop_shape = as.numeric(eop_shape),
     fhp_size_mm = as.numeric(fhp_size_mm)) %>%
   arrange(sex, age)
-
-eop_dfc
 ```
 
 
