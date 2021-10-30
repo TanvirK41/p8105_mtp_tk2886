@@ -292,6 +292,10 @@ eop_dfc %>%
         legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.3, 'cm'),
         text = element_text(size = 8)) +
+  viridis::scale_color_viridis(
+    name = "FHP Size (mm)", 
+    discrete = FALSE
+  ) + 
   facet_grid(~sex)
 ```
 
@@ -313,6 +317,10 @@ eop_dfc %>%
     x = "EOP Category",
     y = "EOP Size (mm)",
     caption = "https://doi.org/10.1038/s41598-018-21625-1") +
+   viridis::scale_color_viridis(
+    name = "EOP Size (mm)", 
+    discrete = FALSE
+  ) + 
   facet_grid(~sex)
 ```
 
