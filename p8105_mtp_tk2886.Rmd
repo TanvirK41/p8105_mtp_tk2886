@@ -271,7 +271,7 @@ eop_dfc %>%
   facet_grid(~sex)
 ```
 
-*Both male and female have each have a single participant incorrectly defined."*
+*Both male and female each have a single participant incorrectly defined.*
 
 
 
@@ -295,7 +295,7 @@ eop_dfc %>%
   facet_grid(~sex)
 ```
 
-*Specific data values are not defined correctly and are in the wrong FHP category."*
+*Specific data values are not defined correctly and are in the wrong FHP category.*
 
 
 
@@ -316,7 +316,7 @@ eop_dfc %>%
   facet_grid(~sex)
 ```
 
-*Specific data values are not defined correctly and are in the wrong EOP size category."*
+*Specific data values are not defined correctly and are in the wrong EOP size category.*
 
 
 
@@ -382,10 +382,10 @@ rate_plot_df <-
 grid.arrange(eopdf_boxplot, rate_plot_df, ncol = 2)
 ```
 
-**FHP DISTRIBUTION PLOT:** The average FHP size of male is always larger than female. The FHP size variability increases as the age increases with age group 60+ having the highest FHP distribution. 
+**FHP DISTRIBUTION PLOT:** The distribution of FHP size of male is larger than female. The FHP size variability increases as the age increases with age group 60+ having the highest FHP distribution. 
 
 
-**EEOP RATE PLOT:** The trend of EEOP rate decreased and then increased for both gender. EEOP rates is higher in male population than in females among all age groups. The largest EEOP rate is in the 18-30 age group for both gender and lowest rate is in 41-50 age group for gender. 
+**EEOP RATE PLOT:** One tread that is observed is EEOP rate decreased and then increased for both gender. EEOP rates is higher in male population than in females among all age groups. The largest EEOP rate is in the 18-30 age group for both gender and lowest rate is in 41-50 age group for gender. 
 
 
 
@@ -441,7 +441,7 @@ eop_dfc %>%
   summarise(Mean = round(mean(fhp_size_mm, na.rm = TRUE)), 
             Standard_Deviation = sd(fhp_size_mm, na.rm = TRUE)) %>% 
   knitr::kable(caption = 
-                 "The **reported mean of FHP is 26** and this is consistent with the mean that is calculated with R code: **26** is the mean.")
+                 "The **reported mean of FHP of the total sample population is 26** and this is consistent with the mean that is calculated with R code: **26** is the mean.")
 
 ```
 
@@ -470,7 +470,11 @@ eop_dfc %>%
 
 
 
+
+
+
 ### Verifying Standard Deviation 
+
 ```{r message = FALSE}
 #Calculating the mean and standard deviation of FHP size for female and male in each age group 
 eop_dfc %>%
@@ -501,6 +505,7 @@ Prevalence %>%
     col.names = c("Prevalence"),
     caption = "Table shows the Prevalence of participants in the sample size with Enlarged External Occipital Protuberance (EEOP).")
 ```
+
 EEOP is *defined* as individuals who have **exceeded 10mm in size for their bony outgrowths**. I used the variable eop_size_mm. I filtered that variable by focusing on individuals who have exceeded 10mm in growth size. The calculated prevalence of **EEOP** is **32.10%** which is similar to the author's value **33%**. 
 
 
@@ -560,4 +565,4 @@ broad_trends %>%
 
 # **Part 4: Conclusion** 
 
-My data analysis findings indicated that there are various inconsistencies and misclassification with the data that was provided. For example, individuals were grouped incorrectly, specific data values in the groups were not correctly labeled which led to incorrect grouping, and the calculated statistical value did not align with the author's values. The figures and conclusion the author stated may not be useful and may be valid because of the data misclassification. While my graphs show that younger adults (18-30 years of age) have higher rate of EEOP than other age group and my statistical calculation shows that older age (60+) population have higher prevalence of forward head protraction (40mm size obversevred the most), we may not state that there is causal relationship between the usage of cell phone and horn growth because of the the numerous inconsistencies with the data. I would like researchers to first gather data on how many hours young adults uses their cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP.
+My data analysis findings indicated that there are various inconsistencies and misclassification with the data that was provided. For example, individuals were grouped incorrectly, specific data values in the dataset were not correctly labeled which led to incorrect grouping, and the calculated statistical value did not align with the reported values. The figures and conclusion the author provided may be invalid because of the data misclassification. While my graph show that younger adults (18-30 years of age) have higher rate of EEOP than other age group and my statistical calculation shows that older age (60+) population have higher prevalence of forward head protraction (40mm size obversevred the most), we may not state that there is causal relationship between the usage of cell phone and horn growth because of the the numerous inconsistencies with the data. I would like researchers to first gather data on how many hours young adults uses their cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP.
