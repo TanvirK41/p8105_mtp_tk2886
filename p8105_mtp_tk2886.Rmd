@@ -383,6 +383,7 @@ grid.arrange(eopdf_boxplot, rate_plot_df, ncol = 2)
 
 
 
+
 ```{r message = FALSE}
 #2x5 collection of panels that compares FHP Size versus EOP Size 
 eop_dfc %>% 
@@ -403,6 +404,8 @@ eop_dfc %>%
 ```
 
 In each age group for gender there is **weak positive correlation** between FHP size and EOP size. 
+
+
 
 
 
@@ -550,4 +553,4 @@ broad_trends %>%
 
 # **Part 4: Conclusion** 
 
-My data analysis findings indicated that there is various inconsistencies with the data that was provided. For example, individuals were grouped incorrectly, specific data values were not correctly labeled, and the calculated statistical value did not align with the author's values. The figures and conclusion the author arrived are not as useful and may not be valid because of the data misclassification. While my graphs show that younger adults (18-30 years of age) have higher rate of EEOP than other age group, we may not state that there is causal relationship between the usage of cell phone and horn growth because of the poor data. I would like researchers to first gather data on how many hours individual uses cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP. 
+My data analysis findings indicated that there are various inconsistencies and misclassification with the data that was provided. For example, individuals were grouped incorrectly, specific data values in the groups were not correctly labeled which led to incorrect grouping, and the calculated statistical value did not align with the author's values. The figures and conclusion the author arrived are not as useful and may not be valid because of the data misclassification. While my graphs show that younger adults (18-30 years of age) have higher rate of EEOP than other age group and my statistical calculation shows that older age (60+) population have higher prevalence of forward head protraction (40mm size obversevred the most), we may not state that there is causal relationship between the usage of cell phone and horn growth because of the the numerous inconsistencies with the data. I would like researchers to first gather data on how many hours young adult individual uses their cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP.
