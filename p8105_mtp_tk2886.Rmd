@@ -19,6 +19,7 @@ library(tidyverse)
 library(ggridges)
 library(readxl)
 library(gridExtra)
+devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
 
 ## Set Global Options 
 knitr::opts_chunk$set(
