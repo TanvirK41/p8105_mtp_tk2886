@@ -134,7 +134,7 @@ eop_dfc <-
   arrange(sex, age)
 ```
 
-**Data Cleaning Process:** In order to having meaningful result, I made sure to first organize the data by re-coding the numerical values into meaningful information that is easier to understand. I converted specific values to numeric data type so that the numerical data values are not character data type. I converted the data groups to factor data type since each group has a fixed number of possible value and anything else will result in NA. Lastly, I organized my data by sex and age, the table shows all the female participants first and then male participants and by age starting from the lowest age going to highest age for each gender group. 
+**Data Cleaning Process:** In order to having meaningful result, I first organized the data by re-coding the numerical values into meaningful information that is easier to understand. I converted specific values to numeric data type so that the numerical data values are not character data type. I converted the data groups to factor data type since each group has a fixed number of possible value and anything else will result in NA. Lastly, I arranged my data by sex and age. 
 
 
 ```{r analyzing the midterm project dataset (eop_dfc)}
@@ -150,6 +150,7 @@ eop_col <- eop_dfc %>%
 eop_key_var <- eop_dfc %>%
   names()
 ```
+
 There are **`r eop_row`** participants in the study. However **2** of the participants are not classified correctly. The key variables in this data set are **`r eop_key_var`**. 
 
 
@@ -212,8 +213,10 @@ eop_dfc %>%
   pivot_wider(
     names_from = sex,
     values_from = frequency) %>% 
-  knitr::kable(col.names = c('Age Group', 'Female', 'Male'),
-               caption = "Age and Gender Distribution - There is two NA's")
+  knitr::kable(col.names = c(
+                'Age Group', 'Female', 'Male'),
+               caption = 
+                 "Age and Gender Distribution - There is **Two** NA's")
 
 #Creating a table that shows there is no NA's for eop_visibility_classification 
 eop_dfc %>% 
@@ -221,7 +224,8 @@ eop_dfc %>%
   summarise(
     frequency = n()) %>%
     mutate(percentage = prop.table(frequency)*100) %>%
-  knitr::kable(caption = "There seems to be **No** errors or misclassifications for EOP Visibility Classification")
+  knitr::kable(caption = 
+                 "There seems to be **No** errors or misclassifications for EOP Visibility Classification")
 
 #Creating a table that shows there is NA's for eop_size 
 eop_dfc %>% 
@@ -230,9 +234,9 @@ eop_dfc %>%
     frequency = n()) %>%
     mutate(percentage = prop.table(frequency)*100) %>%
   knitr::kable(col.names = c(
-    "FHP Size", "Frequency", "Percentage"
-  ),
-    caption = "EOP Distribution - There is One NA")
+    "FHP Size", "Frequency", "Percentage"),
+    caption = 
+    "EOP Distribution - There is **One** NA")
 
 #Creating a table that shows there is NA's for fhp_category size.
 eop_dfc %>% 
@@ -241,9 +245,9 @@ eop_dfc %>%
     frequency = n()) %>%
     mutate(percentage = prop.table(frequency)*100) %>%
   knitr::kable(col.names = c(
-    "EOP Size", "Frequency", "Percentage"
-  ),
-    caption = "FHP Distribution - There is One NA")
+    "EOP Size", "Frequency", "Percentage"),
+    caption =
+      "FHP Distribution - There is **One** NA")
 
 ```
 
@@ -267,6 +271,7 @@ eop_dfc %>%
   facet_grid(~sex)
 ```
 
+*Both male and female have each have a single participant incorrectly defined."*
 
 
 
@@ -290,6 +295,7 @@ eop_dfc %>%
   facet_grid(~sex)
 ```
 
+*Specific data values are not defined correctly and are in the wrong FHP category."*
 
 
 
@@ -310,6 +316,7 @@ eop_dfc %>%
   facet_grid(~sex)
 ```
 
+*Specific data values are not defined correctly and are in the wrong EOP size category."*
 
 
 
@@ -378,7 +385,7 @@ grid.arrange(eopdf_boxplot, rate_plot_df, ncol = 2)
 **FHP DISTRIBUTION PLOT:** The average FHP size of male is always larger than female. The FHP size variability increases as the age increases with age group 60+ having the highest FHP distribution. 
 
 
-**EEOP RATE PLOT:** The trend of EEOP rate FIRST decreased and then increased for both gender (male and female). EEOP rates is higher in male population than in females among all age groups. The largest EEOP rate is in the 18-30 age group for both male and female and lowest rate is in 41-50 age group for both male and female. 
+**EEOP RATE PLOT:** The trend of EEOP rate decreased and then increased for both gender. EEOP rates is higher in male population than in females among all age groups. The largest EEOP rate is in the 18-30 age group for both gender and lowest rate is in 41-50 age group for gender. 
 
 
 
@@ -420,7 +427,7 @@ eop_dfc %>%
                  c("Age Group",
                    "Participant Count"), 
                 caption = 
-                 "The sample size count in four out of the five age group is not consistent with the reported data. **Age group                    of 51-60** has *same sample size count* as the author's data.")
+                 "The sample size count in four out of the five age group is not consistent with the reported data. **Age group of 51-60** has *same sample size count* as the author's data.")
 ```
 
 
@@ -434,7 +441,7 @@ eop_dfc %>%
   summarise(Mean = round(mean(fhp_size_mm, na.rm = TRUE)), 
             Standard_Deviation = sd(fhp_size_mm, na.rm = TRUE)) %>% 
   knitr::kable(caption = 
-                 "The **reported mean of FHP is 26** and this is consistent with the mean that is calculated with R code: **26**                   is the mean.")
+                 "The **reported mean of FHP is 26** and this is consistent with the mean that is calculated with R code: **26** is the mean.")
 
 ```
 
@@ -455,7 +462,7 @@ eop_dfc %>%
                   "Mean",
                   "Standard Deviation"),
     caption = 
-      "The **reported mean of FHP in male is 28** and **for female is 24**. This is consistent with the mean that is calculated         which also indicates that **28** is the mean for men and **24** is the mean for female.")
+      "The **reported mean of FHP in male is 28** and **for female is 24**. This is consistent with the mean that is calculated which also indicates that **28** is the mean for men and **24** is the mean for female.")
 ```
 
 
@@ -473,7 +480,7 @@ eop_dfc %>%
             Standard_Deviation = sd(fhp_size_mm, na.rm = TRUE)) %>% 
   knitr::kable(
     caption = 
-      "The **reported mean, standard deviation of each sex in the age group** is *consistent* with the calculated data. It is          consistent with the reported data because I looked at the error bar (Figure 3) in the report. I compared my calculated mean       and standard deviation with mean and standard deviation showcased in the error bar.")
+      "The **reported mean, standard deviation of each sex in the age group** is *consistent* with the calculated data. It is consistent with the reported data because I looked at the error bar (Figure 3) in the report. I compared my calculated mean and standard deviation with mean and standard deviation showcased in the error bar.")
 ```
 
 
@@ -553,4 +560,4 @@ broad_trends %>%
 
 # **Part 4: Conclusion** 
 
-My data analysis findings indicated that there are various inconsistencies and misclassification with the data that was provided. For example, individuals were grouped incorrectly, specific data values in the groups were not correctly labeled which led to incorrect grouping, and the calculated statistical value did not align with the author's values. The figures and conclusion the author arrived are not as useful and may not be valid because of the data misclassification. While my graphs show that younger adults (18-30 years of age) have higher rate of EEOP than other age group and my statistical calculation shows that older age (60+) population have higher prevalence of forward head protraction (40mm size obversevred the most), we may not state that there is causal relationship between the usage of cell phone and horn growth because of the the numerous inconsistencies with the data. I would like researchers to first gather data on how many hours young adult individual uses their cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP.
+My data analysis findings indicated that there are various inconsistencies and misclassification with the data that was provided. For example, individuals were grouped incorrectly, specific data values in the groups were not correctly labeled which led to incorrect grouping, and the calculated statistical value did not align with the author's values. The figures and conclusion the author stated may not be useful and may be valid because of the data misclassification. While my graphs show that younger adults (18-30 years of age) have higher rate of EEOP than other age group and my statistical calculation shows that older age (60+) population have higher prevalence of forward head protraction (40mm size obversevred the most), we may not state that there is causal relationship between the usage of cell phone and horn growth because of the the numerous inconsistencies with the data. I would like researchers to first gather data on how many hours young adults uses their cell phone and see if there's positive correlation between high usage hours of cell phone and EEOP.
