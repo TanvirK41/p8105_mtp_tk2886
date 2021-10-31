@@ -569,7 +569,7 @@ broad_trends <-
 
 broad_trends %>%
   mutate(Rate = FHPsize_Over40/AgeGroup_Frequency) %>%
-  knitr::kable(caption = "When looking at the broad trends, the data validates the authors statement that FHP size over 40mm is more common in older subjects (among age group of 60+). In the above, it is indicated is it more common in the age population of 60+")
+  knitr::kable(caption = "When looking at the broad trends, the data validates the authors statement that FHP size over 40mm is more common in older subjects (among age group of 60+). In the table above, it is indicated is it more common in the age population of 60+")
 ```
 
 
